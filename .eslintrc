@@ -1,0 +1,26 @@
+{
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "env":{
+        "browser": true,
+        "jest": true
+    },
+    "rules": {
+        // Generic rules
+        "max-len": ["error", 140, 2, {
+            "ignoreUrls": true,
+            "ignoreComments": false,
+            "ignoreRegExpLiterals": true,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true
+        }],
+        "multiline-ternary": ["error", "never"],
+        "no-underscore-dangle": ["error", {
+            "allowAfterThis" : true,
+            "allowAfterSuper" : true
+        }],
+        // React rules
+        "react/jsx-filename-extension": 0,
+        "react/prop-types": 0 // Disable temporarily
+    }
+}
