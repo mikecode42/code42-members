@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import Members from './containers/Members';
+import NotFound from './containers/NotFound';
 
-export default App;
+export default () =>
+  (<Router>
+    <Switch>
+      <Route exact path="/" render={() => <Redirect to="/members" />} />
+      <Route path="/members" component={Members} />
+      <Route path="/404" component={NotFound} />
+      <Route path="*" component={NotFound} />
+    </Switch>
+  </Router>);

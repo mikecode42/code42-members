@@ -3,15 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lodash": "^4.17.4",
+    "material-ui": "^1.0.0-beta.4",
+    "moment": "^2.18.1",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.11"
+    "react-router-dom": "^4.1.2",
+    "react-scripts": "1.0.11",
+    "styled-components": "^2.1.2",
+    "typeface-roboto": "0.0.35"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src"
   },
   "devDependencies": {
     "eslint": "^4.4.1",
