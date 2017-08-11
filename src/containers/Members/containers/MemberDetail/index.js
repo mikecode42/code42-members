@@ -54,8 +54,20 @@ class MemberDetail extends Component {
 
     if (member) {
       const repos = member.repositories.map(repo =>
-        (<ListItem key={repo.title} onClick={this.onRepoClick(repo)} button>
-          <ListItemText primary={repo.title} />
+        (<ListItem key={repo.name} onClick={this.onRepoClick(repo)} button>
+          <ListItemText primary={repo.name} />
+        </ListItem>),
+      );
+
+      const orgs = member.organizations.map(org =>
+        (<ListItem key={org.name} onClick={this.onRepoClick(org)} button>
+          <ListItemText primary={org.name} />
+        </ListItem>),
+      );
+
+      const contributedRepos = member.contributedRepositories.map(repo =>
+        (<ListItem key={repo.name} onClick={this.onRepoClick(repo)} button>
+          <ListItemText primary={repo.name} />
         </ListItem>),
       );
 
@@ -83,9 +95,23 @@ class MemberDetail extends Component {
             <Typography>
               {moment(member.joined).format('M/D/YYYY')}
             </Typography>
+            <Typography type="caption">Contributions</Typography>
+            <Typography>
+              {member.contributions}
+            </Typography>
             <Paper>
               <List subheader={<ListSubheader>Repositories</ListSubheader>}>
                 {repos}
+              </List>
+            </Paper>
+            <Paper>
+              <List subheader={<ListSubheader>Organizations</ListSubheader>}>
+                {orgs}
+              </List>
+            </Paper>
+            <Paper>
+              <List subheader={<ListSubheader>Contributed Repositories</ListSubheader>}>
+                {contributedRepos}
               </List>
             </Paper>
           </CardContent>
