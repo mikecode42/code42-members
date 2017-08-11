@@ -1,23 +1,10 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import Avatar from 'material-ui/Avatar';
-import MaterialList, { ListItem, ListItemText } from 'material-ui/List';
+import { ListItem, ListItemText } from 'material-ui/List';
 
-import config from '../../../../config';
-
-const List = styled(MaterialList)`
-  width: 100%;
-  /* 16px is the padding on the material-ui List */
-  height: calc(100vh - 16px);
-  overflow: auto;
-  background-color: #ffffff;
-
-  ${config.breakpoint.medium} {
-    max-width: 300px;
-  }
-`;
+import List from './List';
 
 class MemberList extends Component {
   selectMember = handle => () => {

@@ -1,156 +1,68 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import styled from 'styled-components';
 import moment from 'moment';
 
-import MaterialButton from 'material-ui/Button';
-import MaterialCard, { CardContent as MaterialCardContent, CardMedia as MaterialCardMedia } from 'material-ui/Card';
-import MaterialList, { ListItem, ListItemText, ListSubheader } from 'material-ui/List';
-import MaterialPaper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
-import config from '../../../../config';
+import MemberCard, { CardContent, CardMedia } from './components/MemberCard';
+import MemberBackButton from './components/MemberBackButton';
+import MemberList from './components/MemberList';
 
-const Card = styled(MaterialCard)`
-  position: absolute;
-  display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
-  width: 100%;
-  /* Need extra specificity to override the material styles */
-  && {
-    overflow-y: auto;
+const IMAGE_DIMENSIONS = 460;
+
+const onBackClick = () => {
+  this.props.history.replace({ pathname: '/members' });
+};
+
+const MemberDetail = (props) => {
+  const { handle } = props.match.params;
+
+  const member = props.members.find(current => current.handle === handle);
+
+  if (member) {
+    return (
+      <MemberCard>
+        <MemberBackButton color="primary" onClick={onBackClick}>
+          Back to Member List
+        </MemberBackButton>
+        <CardMedia>
+          <img src={member.imageUrl} alt="user" width={IMAGE_DIMENSIONS} height={IMAGE_DIMENSIONS} />
+        </CardMedia>
+        <CardContent>
+          <Typography type="headline">
+            {member.name}
+          </Typography>
+          <Typography type="subheading" color="secondary">
+            {member.handle}
+          </Typography>
+          <Typography type="caption">Location</Typography>
+          <Typography>
+            {member.location ? member.location : 'N/A'}
+          </Typography>
+          <Typography type="caption">Email</Typography>
+          <Typography>
+            {member.email ? member.email : 'N/A'}
+          </Typography>
+          <Typography type="caption">Join Date</Typography>
+          <Typography>
+            {moment(member.joined).format('M/D/YYYY')}
+          </Typography>
+          <Typography type="caption">Contributions</Typography>
+          <Typography>
+            {member.contributions}
+          </Typography>
+          <MemberList title="Repositories" items={member.repositories} />
+          <MemberList title="Organizations" items={member.organizations} />
+          <MemberList title="Contributed Repositories" items={member.contributedRepositories} />
+        </CardContent>
+      </MemberCard>
+    );
   }
-
-  ${config.breakpoint.medium} {
-    position: relative;
-    max-height: calc(100vh - ${config.spacing.TWO});
-    margin: ${config.spacing.ONE};
+  // If the member wasn't found, redirect to 404
+  if (this.props.members && this.props.members.length) {
+    this.props.history.replace({ pathname: '/404' });
   }
-`;
-
-const Button = styled(MaterialButton)`
-  width: 100%;
-
-  ${config.breakpoint.medium} {
-    /* Need extra specificity to override the material styles */
-    && { display: none; }
-  }
-`;
-
-const CardMedia = styled(MaterialCardMedia)`
-  flex: 0;
-  margin: auto;
-`;
-
-const CardContent = styled(MaterialCardContent)`
-  flex: 1;
-`;
-
-const List = styled(MaterialList)`
-  width: 100%;
-  background-color: #ffffff;
-`;
-
-const Paper = styled(MaterialPaper)`
-  margin-top: ${config.spacing.ONE_AND_HALF};
-  margin-bottom: ${config.spacing.ONE_AND_HALF};
-`;
-
-const UserImage = styled.img`
-  width: 460px;
-  height: 460px;
-`;
-
-class MemberDetail extends Component {
-  onRepoClick = repo => () => {
-    window.location = repo.url;
-  };
-
-  onBackClick = () => {
-    this.props.history.replace({ pathname: '/members' });
-  };
-
-  render() {
-    const { handle } = this.props.match.params;
-
-    const member = this.props.members.find(current => current.handle === handle);
-
-    if (member) {
-      const repos = member.repositories.map(repo =>
-        (<ListItem key={repo.name} onClick={this.onRepoClick(repo)} button>
-          <ListItemText primary={repo.name} />
-        </ListItem>),
-      );
-
-      const orgs = member.organizations.map(org =>
-        (<ListItem key={org.name} onClick={this.onRepoClick(org)} button>
-          <ListItemText primary={org.name} />
-        </ListItem>),
-      );
-
-      const contributedRepos = member.contributedRepositories.map(repo =>
-        (<ListItem key={repo.name} onClick={this.onRepoClick(repo)} button>
-          <ListItemText primary={repo.name} />
-        </ListItem>),
-      );
-
-      return (
-        <Card>
-          <Button color="primary" onClick={this.onBackClick}>
-            Back to Member List
-          </Button>
-          <CardMedia>
-            <UserImage src={member.imageUrl} alt="user" />
-          </CardMedia>
-          <CardContent>
-            <Typography type="headline">
-              {member.name}
-            </Typography>
-            <Typography type="subheading" color="secondary">
-              {member.handle}
-            </Typography>
-            <Typography type="caption">Location</Typography>
-            <Typography>
-              {member.location ? member.location : 'N/A'}
-            </Typography>
-            <Typography type="caption">Email</Typography>
-            <Typography>
-              {member.email ? member.email : 'N/A'}
-            </Typography>
-            <Typography type="caption">Join Date</Typography>
-            <Typography>
-              {moment(member.joined).format('M/D/YYYY')}
-            </Typography>
-            <Typography type="caption">Contributions</Typography>
-            <Typography>
-              {member.contributions}
-            </Typography>
-            <Paper>
-              <List subheader={<ListSubheader>Repositories</ListSubheader>}>
-                {repos}
-              </List>
-            </Paper>
-            <Paper>
-              <List subheader={<ListSubheader>Organizations</ListSubheader>}>
-                {orgs}
-              </List>
-            </Paper>
-            <Paper>
-              <List subheader={<ListSubheader>Contributed Repositories</ListSubheader>}>
-                {contributedRepos}
-              </List>
-            </Paper>
-          </CardContent>
-        </Card>
-      );
-    }
-    // If the member wasn't found, redirect to 404
-    if (this.props.members && this.props.members.length) {
-      this.props.history.replace({ pathname: '/404' });
-    }
-    return null;
-  }
-}
+  return null;
+};
 
 export default withRouter(MemberDetail);

@@ -4,6 +4,8 @@ import Member from '../models/Member';
 
 const API_URL = 'https://api.github.com/orgs/code42/members';
 
+// ------------- Internal Functions ------------- //
+
 async function retrieveOrganizations(memberOrganizations) {
   return Promise.all(
     memberOrganizations.map(async (org) => {
@@ -40,6 +42,8 @@ async function populateMember(memberData) {
 
   return new Member(memberData, userDetails, repositories, organizations, events, fullEventRepos);
 }
+
+// ------------- Public Functions ------------- //
 
 export async function getAllMembers() {
   const json = await (await fetch(API_URL)).json();
