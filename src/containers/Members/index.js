@@ -25,16 +25,13 @@ export default class Members extends Component {
     this.setState({ members });
   }
 
-  detailRoute = ({ component: InnerComponent, ...rest }) =>
-    <Route {...rest} render={props => <InnerComponent members={this.state.members} {...props} />} />;
-
   render() {
-    const DetailRoute = this.detailRoute;
+    const MemberDetailWithMembers = props => <MemberDetail members={this.state.members} {...props} />;
 
     return (
       <MemberContainer>
         <MemberList members={this.state.members} />
-        <DetailRoute path="/members/:handle" component={MemberDetail} />
+        <Route path="/members/:handle" component={MemberDetailWithMembers} />
       </MemberContainer>
     );
   }
