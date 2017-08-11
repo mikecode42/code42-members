@@ -5,14 +5,16 @@ import { withRouter } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 import MaterialList, { ListItem, ListItemText } from 'material-ui/List';
 
+import config from '../../../../config';
+
 const List = styled(MaterialList)`
   width: 100%;
   /* 16px is the padding on the material-ui List */
   height: calc(100vh - 16px);
   overflow: auto;
-  background-color: white;
+  background-color: #ffffff;
 
-  @media only screen and (min-width : 768px) {
+  ${config.breakpoint.medium} {
     max-width: 300px;
   }
 `;

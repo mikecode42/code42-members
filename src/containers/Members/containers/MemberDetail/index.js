@@ -9,26 +9,32 @@ import MaterialList, { ListItem, ListItemText, ListSubheader } from 'material-ui
 import MaterialPaper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
+import config from '../../../../config';
+
 const Card = styled(MaterialCard)`
   position: absolute;
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
   width: 100%;
-  overflow-y: auto !important;
+  /* Need extra specificity to override the material styles */
+  && {
+    overflow-y: auto;
+  }
 
-  @media only screen and (min-width : 768px) {
+  ${config.breakpoint.medium} {
     position: relative;
-    max-height: calc(100vh - 24px);
-    margin: 12px;
+    max-height: calc(100vh - ${config.spacing.TWO});
+    margin: ${config.spacing.ONE};
   }
 `;
 
 const Button = styled(MaterialButton)`
   width: 100%;
 
-  @media only screen and (min-width : 768px) {
-    display: none !important;
+  ${config.breakpoint.medium} {
+    /* Need extra specificity to override the material styles */
+    && { display: none; }
   }
 `;
 
@@ -43,12 +49,12 @@ const CardContent = styled(MaterialCardContent)`
 
 const List = styled(MaterialList)`
   width: 100%;
-  background-color: white;
+  background-color: #ffffff;
 `;
 
 const Paper = styled(MaterialPaper)`
-  margin-top: 18px;
-  margin-bottom: 18px;
+  margin-top: ${config.spacing.ONE_AND_HALF};
+  margin-bottom: ${config.spacing.ONE_AND_HALF};
 `;
 
 const UserImage = styled.img`
