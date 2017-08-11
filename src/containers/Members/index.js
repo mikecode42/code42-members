@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { CircularProgress } from 'material-ui/Progress';
+
 import { getAllMembers } from '../../services/api/members';
+import CenteredContainer from '../../components/CenteredContainer';
 import MemberList from './components/MemberList';
 import MemberDetail from './containers/MemberDetail';
 
@@ -28,11 +31,18 @@ export default class Members extends Component {
   render() {
     const MemberDetailWithMembers = props => <MemberDetail members={this.state.members} {...props} />;
 
+    if (this.state.members && this.state.members.length) {
+      return (
+        <MemberContainer>
+          <MemberList members={this.state.members} />
+          <Route path="/members/:handle" component={MemberDetailWithMembers} />
+        </MemberContainer>
+      );
+    }
     return (
-      <MemberContainer>
-        <MemberList members={this.state.members} />
-        <Route path="/members/:handle" component={MemberDetailWithMembers} />
-      </MemberContainer>
+      <CenteredContainer>
+        <CircularProgress />
+      </CenteredContainer>
     );
   }
 }
