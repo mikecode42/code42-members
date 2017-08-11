@@ -12,7 +12,7 @@ const List = styled(MaterialList)`
   overflow: auto;
   background-color: white;
 
-  @media only screen and (min-device-width : 768px) {
+  @media only screen and (min-width : 768px) {
     max-width: 300px;
   }
 `;

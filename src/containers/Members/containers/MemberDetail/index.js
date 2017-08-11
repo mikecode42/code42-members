@@ -17,7 +17,7 @@ const Card = styled(MaterialCard)`
   width: 100%;
   overflow-y: auto !important;
 
-  @media only screen and (min-device-width : 768px) {
+  @media only screen and (min-width : 768px) {
     position: relative;
     max-height: calc(100vh - 24px);
     margin: 12px;
@@ -25,7 +25,9 @@ const Card = styled(MaterialCard)`
 `;
 
 const Button = styled(MaterialButton)`
-  @media only screen and (min-device-width : 768px) {
+  width: 100%;
+
+  @media only screen and (min-width : 768px) {
     display: none !important;
   }
 `;
