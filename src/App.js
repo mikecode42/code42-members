@@ -1,12 +1,15 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 import Members from './containers/Members';
+import NotFound from './containers/NotFound';
 
 export default () =>
   (<Router>
-    <div>
+    <Switch>
       <Route exact path="/" render={() => <Redirect to="/members" />} />
       <Route path="/members" component={Members} />
-    </div>
+      <Route path="/404" component={NotFound} />
+      <Route path="*" component={NotFound} />
+    </Switch>
   </Router>);

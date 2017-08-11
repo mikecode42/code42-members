@@ -16,7 +16,7 @@ const List = styled(MaterialList)`
 
 class MemberList extends Component {
   selectMember = handle => () => {
-    this.props.history.push({ pathname: handle });
+    this.props.history.push({ pathname: `/members/${handle}` });
   };
 
   render() {

@@ -118,7 +118,8 @@ class MemberDetail extends Component {
         </Card>
       );
     }
-    // TODO redirect to 404?
+    // If the member wasn't found, redirect to 404
+    this.props.history.replace({ pathname: '/404' });
     return null;
   }
 }
