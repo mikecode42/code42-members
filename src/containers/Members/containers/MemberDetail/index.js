@@ -16,6 +16,28 @@ const MemberDetail = (props) => {
         <div>
           Name: {member.name}
         </div>
+        <div>
+          Image: <img src={member.imageUrl} alt="user" />
+        </div>
+        <div>
+          Repositories:{' '}
+          {member.repositories.map(repo =>
+            (<div key={repo.title}>
+              <a href={repo.url}>
+                {repo.title}
+              </a>
+            </div>),
+          )}
+        </div>
+        <div>
+          Location: {member.location}
+        </div>
+        <div>
+          Email: {member.email}
+        </div>
+        <div>
+          Join Date: {member.joined.toDateString()}
+        </div>
       </div>
     );
   }
