@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 
 import MaterialList, { ListItem, ListItemText } from 'material-ui/List';
 
@@ -12,27 +13,33 @@ const List = styled(MaterialList)`
   background-color: white;
 `;
 
-const MemberList = (props) => {
-  const { members } = props;
+class MemberList extends Component {
+  selectMember = handle => () => {
+    this.props.history.push({ pathname: handle });
+  };
 
-  const items = members.map(member =>
-    (<ListItem key={member.handle} button>
-      <ListItemText primary={member.name} secondary={member.handle} />
-    </ListItem>),
-  );
+  render() {
+    const { members } = this.props;
 
-  if (members && members.length) {
-    return (
-      <List>
-        {items}
-      </List>
+    const items = members.map(member =>
+      (<ListItem key={member.handle} onClick={this.selectMember(member.handle)} button>
+        <ListItemText primary={member.name} secondary={member.handle} />
+      </ListItem>),
     );
+
+    if (members && members.length) {
+      return (
+        <List>
+          {items}
+        </List>
+      );
+    }
+    return null;
   }
-  return null;
-};
+}
 
 MemberList.defaultProps = {
   members: [],
 };
 
-export default MemberList;
+export default withRouter(MemberList);

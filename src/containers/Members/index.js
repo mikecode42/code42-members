@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import styled from 'styled-components';
 
 import MemberList from './components/MemberList';
 
@@ -11,8 +12,16 @@ const mockMembers = [
   { name: 'Eric Johnson', handle: 'dude1983' },
 ];
 
+const MemberContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const DetailRoute = ({ component: Component, ...rest }) =>
+  <Route {...rest} render={props => <Component members={mockMembers} {...props} />} />;
+
 export default () =>
-  (<div>
+  (<MemberContainer>
     <MemberList members={mockMembers} />
-    <Route path="/members/:id" component={MemberDetail} />
-  </div>);
+    <DetailRoute path="/members/:handle" component={MemberDetail} />
+  </MemberContainer>);
