@@ -3,19 +3,31 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
 
+import MaterialButton from 'material-ui/Button';
 import MaterialCard, { CardContent as MaterialCardContent, CardMedia as MaterialCardMedia } from 'material-ui/Card';
 import MaterialList, { ListItem, ListItemText, ListSubheader } from 'material-ui/List';
 import MaterialPaper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
 const Card = styled(MaterialCard)`
+  position: absolute;
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
-  margin: 12px;
-  max-height: calc(100vh - 24px);
   width: 100%;
   overflow-y: auto !important;
+
+  @media only screen and (min-device-width : 768px) {
+    position: relative;
+    max-height: calc(100vh - 24px);
+    margin: 12px;
+  }
+`;
+
+const Button = styled(MaterialButton)`
+  @media only screen and (min-device-width : 768px) {
+    display: none !important;
+  }
 `;
 
 const CardMedia = styled(MaterialCardMedia)`
@@ -47,6 +59,10 @@ class MemberDetail extends Component {
     window.location = repo.url;
   };
 
+  onBackClick = () => {
+    this.props.history.replace({ pathname: '/members' });
+  };
+
   render() {
     const { handle } = this.props.match.params;
 
@@ -73,6 +89,9 @@ class MemberDetail extends Component {
 
       return (
         <Card>
+          <Button color="primary" onClick={this.onBackClick}>
+            Back to Member List
+          </Button>
           <CardMedia>
             <UserImage src={member.imageUrl} alt="user" />
           </CardMedia>
@@ -119,7 +138,9 @@ class MemberDetail extends Component {
       );
     }
     // If the member wasn't found, redirect to 404
-    this.props.history.replace({ pathname: '/404' });
+    if (this.props.members && this.props.members.length) {
+      this.props.history.replace({ pathname: '/404' });
+    }
     return null;
   }
 }

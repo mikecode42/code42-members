@@ -7,11 +7,14 @@ import MaterialList, { ListItem, ListItemText } from 'material-ui/List';
 
 const List = styled(MaterialList)`
   width: 100%;
-  max-width: 300px;
   /* 16px is the padding on the material-ui List */
   height: calc(100vh - 16px);
   overflow: auto;
   background-color: white;
+
+  @media only screen and (min-device-width : 768px) {
+    max-width: 300px;
+  }
 `;
 
 class MemberList extends Component {
