@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import MaterialCard, { CardContent as MaterialCardContent, CardMedia as MaterialCardMedia } from 'material-ui/Card';
 import MaterialList, { ListItem, ListItemText, ListSubheader } from 'material-ui/List';
@@ -80,7 +81,7 @@ class MemberDetail extends Component {
             </Typography>
             <Typography type="caption">Join Date</Typography>
             <Typography>
-              {member.joined.toDateString()}
+              {moment(member.joined).format('M/D/YYYY')}
             </Typography>
             <Paper>
               <List subheader={<ListSubheader>Repositories</ListSubheader>}>
