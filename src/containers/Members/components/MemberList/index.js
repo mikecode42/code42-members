@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
+import Avatar from 'material-ui/Avatar';
 import MaterialList, { ListItem, ListItemText } from 'material-ui/List';
 
 const List = styled(MaterialList)`
@@ -23,6 +24,9 @@ class MemberList extends Component {
 
     const items = members.map(member =>
       (<ListItem key={member.handle} onClick={this.selectMember(member.handle)} button>
+        <Avatar>
+          <img src={member.imageUrl} alt="Member Avatar" width={40} height={40} />
+        </Avatar>
         <ListItemText primary={member.name} secondary={member.handle} />
       </ListItem>),
     );
