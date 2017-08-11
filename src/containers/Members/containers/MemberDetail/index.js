@@ -7,9 +7,16 @@ const MemberDetail = (props) => {
   const member = props.members.find(current => current.handle === handle);
 
   if (member) {
+    const repos = member.repositories.map(repo =>
+      (<div key={repo.title}>
+        <a href={repo.url}>
+          {repo.title}
+        </a>
+      </div>),
+    );
+
     return (
       <div>
-        <h1>Member Detail</h1>
         <div>
           Handle: {member.handle}
         </div>
@@ -20,14 +27,7 @@ const MemberDetail = (props) => {
           Image: <img src={member.imageUrl} alt="user" />
         </div>
         <div>
-          Repositories:{' '}
-          {member.repositories.map(repo =>
-            (<div key={repo.title}>
-              <a href={repo.url}>
-                {repo.title}
-              </a>
-            </div>),
-          )}
+          Repositories: {repos}
         </div>
         <div>
           Location: {member.location}
