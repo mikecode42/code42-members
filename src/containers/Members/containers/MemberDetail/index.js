@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -24,7 +24,6 @@ const CardMedia = styled(MaterialCardMedia)`
 
 const CardContent = styled(MaterialCardContent)`
   flex: 1;
-  /* overflow-y: auto; */
 `;
 
 const List = styled(MaterialList)`
@@ -42,55 +41,59 @@ const UserImage = styled.img`
   height: 460px;
 `;
 
-const MemberDetail = (props) => {
-  const { handle } = props.match.params;
+class MemberDetail extends Component {
+  onRepoClick = repo => () => {
+    window.location = repo.url;
+  };
 
-  const member = props.members.find(current => current.handle === handle);
+  render() {
+    const { handle } = this.props.match.params;
 
-  if (member) {
-    const repos = member.repositories.map(repo =>
-      (<ListItem key={repo.title} button>
-        {/* <a href={repo.url}> */}
-        <ListItemText primary={repo.title} />
-        {/* </a> */}
-      </ListItem>),
-    );
+    const member = this.props.members.find(current => current.handle === handle);
 
-    return (
-      <Card>
-        <CardMedia>
-          <UserImage src={member.imageUrl} alt="user" />
-        </CardMedia>
-        <CardContent>
-          <Typography type="headline">
-            {member.name}
-          </Typography>
-          <Typography type="subheading" color="secondary">
-            {member.handle}
-          </Typography>
-          <Typography type="caption">Location</Typography>
-          <Typography>
-            {member.location ? member.location : 'N/A'}
-          </Typography>
-          <Typography type="caption">Email</Typography>
-          <Typography>
-            {member.email ? member.email : 'N/A'}
-          </Typography>
-          <Typography type="caption">Join Date</Typography>
-          <Typography>
-            {member.joined.toDateString()}
-          </Typography>
-          <Paper>
-            <List subheader={<ListSubheader>Repositories</ListSubheader>}>
-              {repos}
-            </List>
-          </Paper>
-        </CardContent>
-      </Card>
-    );
+    if (member) {
+      const repos = member.repositories.map(repo =>
+        (<ListItem key={repo.title} onClick={this.onRepoClick(repo)} button>
+          <ListItemText primary={repo.title} />
+        </ListItem>),
+      );
+
+      return (
+        <Card>
+          <CardMedia>
+            <UserImage src={member.imageUrl} alt="user" />
+          </CardMedia>
+          <CardContent>
+            <Typography type="headline">
+              {member.name}
+            </Typography>
+            <Typography type="subheading" color="secondary">
+              {member.handle}
+            </Typography>
+            <Typography type="caption">Location</Typography>
+            <Typography>
+              {member.location ? member.location : 'N/A'}
+            </Typography>
+            <Typography type="caption">Email</Typography>
+            <Typography>
+              {member.email ? member.email : 'N/A'}
+            </Typography>
+            <Typography type="caption">Join Date</Typography>
+            <Typography>
+              {member.joined.toDateString()}
+            </Typography>
+            <Paper>
+              <List subheader={<ListSubheader>Repositories</ListSubheader>}>
+                {repos}
+              </List>
+            </Paper>
+          </CardContent>
+        </Card>
+      );
+    }
+    // TODO redirect to 404?
+    return null;
   }
-  // TODO redirect to 404?
-  return null;
-};
+}
 
 export default withRouter(MemberDetail);
