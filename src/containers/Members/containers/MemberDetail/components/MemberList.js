@@ -23,7 +23,7 @@ const onItemClick = item => () => {
 export default (props) => {
   const { title, items } = props;
 
-  const listItems = items.repositories.map(item =>
+  const listItems = items.map(item =>
     (<ListItem key={item.name} onClick={onItemClick(item)} button>
       <ListItemText primary={item.name} />
     </ListItem>),
