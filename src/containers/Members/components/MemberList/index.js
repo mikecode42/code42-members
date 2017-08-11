@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Avatar from 'material-ui/Avatar';
 import { ListItem, ListItemText } from 'material-ui/List';
@@ -36,6 +37,16 @@ class MemberList extends Component {
 
 MemberList.defaultProps = {
   members: [],
+};
+
+MemberList.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  members: PropTypes.arrayOf(
+    PropTypes.shape({
+      handle: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
 };
 
 export default withRouter(MemberList);

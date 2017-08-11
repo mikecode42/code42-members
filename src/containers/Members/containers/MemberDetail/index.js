@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import Typography from 'material-ui/Typography';
@@ -66,5 +67,23 @@ class MemberDetail extends Component {
     return null;
   }
 }
+
+MemberDetail.propTypes = {
+  match: PropTypes.shape({ params: PropTypes.shape({ handle: PropTypes.string.isRequired }).isRequired }).isRequired,
+  history: PropTypes.shape({ replace: PropTypes.func.isRequired }).isRequired,
+  members: PropTypes.arrayOf(
+    PropTypes.shape({
+      handle: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      location: PropTypes.string,
+      email: PropTypes.string,
+      joined: PropTypes.instanceOf(Date).isRequired,
+      contributions: PropTypes.number.isRequired,
+      repositories: PropTypes.array,
+      organizations: PropTypes.array,
+      contributedRepositories: PropTypes.array,
+    }),
+  ).isRequired,
+};
 
 export default withRouter(MemberDetail);

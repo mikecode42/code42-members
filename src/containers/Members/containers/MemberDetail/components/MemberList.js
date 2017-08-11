@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import MaterialList, { ListItem, ListItemText, ListSubheader } from 'material-ui/List';
@@ -20,7 +21,7 @@ const onItemClick = item => () => {
   window.location = item.url;
 };
 
-export default (props) => {
+const MemberList = (props) => {
   const { title, items } = props;
 
   const listItems = items.map(item =>
@@ -43,3 +44,15 @@ export default (props) => {
     </Paper>
   );
 };
+
+MemberList.propTypes = {
+  title: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
+
+export default MemberList;
